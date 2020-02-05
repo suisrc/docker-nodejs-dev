@@ -1,4 +1,4 @@
-# docker-compose -f nodejs.yaml build
+# docker-compose -f test.yaml build
 # git config --global user.name "suisrc"
 # git config --global user.email "z@suisrc.cn"
 # git clone -b  <分支> <版本库的网址> <本地目录名>

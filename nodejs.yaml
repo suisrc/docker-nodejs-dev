@@ -1,0 +1,33 @@
+# docker-compose -f nodejs.yaml build
+# git config --global user.name "suisrc"
+# git config --global user.email "z@suisrc.cn"
+# git clone -b  <分支> <版本库的网址> <本地目录名>
+# GIT_REPO_URLS <版本库的网址>|<分支>|<本地目录名>
+# rm -rf .git && git init # 清除git并且重新初始化git
+version: "3.7"
+services:
+  nodejs-server:
+    build:
+      context: ./
+      dockerfile: nodejs.Dockerfile
+      args:
+        LINUX_MIRRORS: http://mirrors.aliyun.com
+        FONT_URL: http://172.17.0.1:9010/github/fonts/sarasa-gothic-ttf-0.10.2-sc.7z
+        CODE_URL: http://172.17.0.1:9010/github/code-server2.1698-vsc1.41.1-linux-x86_64.tar.gz
+        OH_MY_ZSH_SH_URL: https://gitee.com/ncr/ohmyzsh/raw/sc/tools/install.sh
+        OH_MY_ZSH_SUGGES: https://gitee.com/ncr/zsh-autosuggestions
+    image: suisrc/nodejs-dev:v0.0.006
+    container_name: kratos
+    environment:
+    - GIT_USER_NAME=suisrc
+    - GIT_USER_EMAIL=z@suisrc.cn
+    #- GIT_REPO_URLS=https://gitee.com/ncr/github.git||master;https://gitee.com/ncr/github.git|sc|sc
+    - GIT_REPO_URLS=https://gitee.com/ncr/github.git||.
+    - TZ=Asia/Shanghai
+    - PASSWORD=123456
+    volumes:
+    - E:\docker\project\kratos\source:/home/project
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 7777:7777
+    restart: unless-stopped

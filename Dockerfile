@@ -41,8 +41,7 @@ RUN echo "**** update linux and install softs ****" && \
         p7zip \
         ntpdate \
         locales && \
-    rm -rf /tmp/* /var/tmp/* 
-    # rm -rf /var/lib/apt/lists/*
+    rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
 # fonts
 RUN echo "**** install sarasa-gothic fonts ****" && \

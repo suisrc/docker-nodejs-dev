@@ -9,7 +9,7 @@ services:
   nodejs-server:
     build:
       context: ./
-      dockerfile: nodejs.Dockerfile
+      dockerfile: Dockerfile
       args:
         LINUX_MIRRORS: http://mirrors.aliyun.com
         FONT_URL: http://172.17.0.1:9010/github/fonts/sarasa-gothic-ttf-0.10.2-sc.7z

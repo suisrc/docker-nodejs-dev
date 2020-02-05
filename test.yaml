@@ -17,7 +17,7 @@ services:
         OH_MY_ZSH_SH_URL: https://gitee.com/ncr/ohmyzsh/raw/sc/tools/install.sh
         OH_MY_ZSH_SUGGES: https://gitee.com/ncr/zsh-autosuggestions
     image: suisrc/nodejs-dev:v0.0.006
-    container_name: kratos
+    container_name: nodejs-dev
     environment:
     - GIT_USER_NAME=suisrc
     - GIT_USER_EMAIL=z@suisrc.cn

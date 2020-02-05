@@ -6,7 +6,7 @@
 # rm -rf .git && git init # 清除git并且重新初始化git
 version: "3.7"
 services:
-  nodejs-server:
+  nodejs-dev:
     build:
       context: ./
       dockerfile: Dockerfile

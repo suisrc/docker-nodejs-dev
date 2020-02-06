@@ -30,4 +30,5 @@ services:
     - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 7777:7777
+      - 7001:7001
     restart: unless-stopped

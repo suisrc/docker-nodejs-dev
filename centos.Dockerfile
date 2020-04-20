@@ -1,4 +1,4 @@
-# https://github.com/suisrc/docker-code-server/blob/master/debian.Dockerfile
+# https://github.com/suisrc/docker-code-server/blob/master/centos.Dockerfile
 # https://github.com/nodejs/docker-node/blob/master/12/stretch/Dockerfile
 # 
 # https://github.com/suisrc/docker-code-server/releases
@@ -7,16 +7,16 @@
 # https://hub.docker.com/_/node
 # https://hub.docker.com/r/suisrc/vscode
 # FROM node:12-stretch
-FROM suisrc/vscode:1.43.2-3.1.1-debian9
+FROM suisrc/vscode:1.43.2-3.1.1-centos7
 
 ENV NODE_VERSION 12.16.2
 ENV YARN_VERSION 1.22.4
 
 RUN echo "**** update linux ****" && \
-    apt-get update && \
-    apt-get install --no-install-recommends -y \
+    yum clean all && yum makecache && yum update -y &&\
+    yum install --no-install-recommends -y \
         dpkg &&\
-    rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
+    rm -rf /tmp/* /var/tmp/* /var/cache/yum  
 # nodejs
 RUN echo "**** install nodejs ****" &&\
     ARCH= && dpkgArch="$(dpkg --print-architecture)" \

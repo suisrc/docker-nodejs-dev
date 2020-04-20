@@ -19,23 +19,6 @@ jobs:
         run: |
           docker build . --file debian.Dockerfile --tag image
 
-      - name: Push github image
-        run: |
-          REGISTRY_URL=docker.pkg.github.com
-          IMAGE_OS=debian9
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login $REGISTRY_URL -u ${{ github.actor }} --password-stdin
-
-          IMAGE_ID=$REGISTRY_URL/${{ github.repository }}/$IMAGE_OS
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          echo IMAGE_ID=$IMAGE_ID
-
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')$DOCKER_IMAGE_VERSION_SUFFIX
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          echo VERSION=$VERSION
-
-          docker tag image $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
-
       - name: Push docker image
         run: |
           REGISTRY_URL=docker.io
@@ -51,27 +34,27 @@ jobs:
 
           docker tag image $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
-  push-npmjs:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Build image
-        run: |
-          docker build ./npmjs --file ./npmjs/Dockerfile --tag image
-
-      - name: Push docker image
-        run: |
-          REGISTRY_URL=docker.io
-          echo "${{ secrets.DOCKER_TOKEN }}" | docker login $REGISTRY_URL -u ${{ secrets.DOCKER_USER }} --password-stdin
-
-          IMAGE_ID=$REGISTRY_URL/suisrc/npmjs
-          echo IMAGE_ID=$IMAGE_ID
-
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          echo VERSION=$VERSION
-
-          docker tag image $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+#  push-npmjs:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#
+#      - name: Build image
+#        run: |
+#          docker build ./npmjs --file ./npmjs/debian.Dockerfile --tag image
+#
+#      - name: Push docker image
+#        run: |
+#          REGISTRY_URL=docker.io
+#          echo "${{ secrets.DOCKER_TOKEN }}" | docker login $REGISTRY_URL -u ${{ secrets.DOCKER_USER }} --password-stdin
+#
+#          IMAGE_ID=$REGISTRY_URL/suisrc/npmjs
+#          echo IMAGE_ID=$IMAGE_ID
+#
+#          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+#          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+#          echo VERSION=$VERSION
+#
+#          docker tag image $IMAGE_ID:$VERSION
+#          docker push $IMAGE_ID:$VERSION

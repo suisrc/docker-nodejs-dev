@@ -36,22 +36,6 @@ jobs:
           docker tag image $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
 
-      - name: Push quay image
-        run: |
-          REGISTRY_URL=quay.io
-          IMAGE_OS=debian9
-          echo "${{ secrets.QUAY_TOKEN }}" | docker login $REGISTRY_URL -u ${{ secrets.QUAY_USER }} --password-stdin
-
-          IMAGE_ID=$REGISTRY_URL/$DOCKER_IMAGE_NAME
-          echo IMAGE_ID=$IMAGE_ID
-
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')-$IMAGE_OS$DOCKER_IMAGE_VERSION_SUFFIX
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          echo VERSION=$VERSION
-
-          docker tag image $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
-
       - name: Push docker image
         run: |
           REGISTRY_URL=docker.io
@@ -76,21 +60,6 @@ jobs:
       - name: Build image
         run: |
           docker build ./npmjs --file ./npmjs/Dockerfile --tag image
-
-      - name: Push quay image
-        run: |
-          REGISTRY_URL=quay.io
-          echo "${{ secrets.QUAY_TOKEN }}" | docker login $REGISTRY_URL -u ${{ secrets.QUAY_USER }} --password-stdin
-
-          IMAGE_ID=$REGISTRY_URL/suisrc/npmjs
-          echo IMAGE_ID=$IMAGE_ID
-
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          echo VERSION=$VERSION
-
-          docker tag image $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
 
       - name: Push docker image
         run: |

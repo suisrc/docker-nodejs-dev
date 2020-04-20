@@ -5,7 +5,7 @@ ENV YARN_VERSION 1.22.4
 
 RUN echo "**** update linux ****" && \
     yum clean all && yum makecache && yum update -y &&\
-    yum install --no-install-recommends -y \
+    yum install -y \
         dpkg &&\
     rm -rf /tmp/* /var/tmp/* /var/cache/yum  
 

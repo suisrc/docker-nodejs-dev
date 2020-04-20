@@ -14,7 +14,7 @@ ENV YARN_VERSION 1.22.4
 RUN echo "**** update linux ****" && \
     apt-get update && \
     apt-get install --no-install-recommends -y \
-        dpkg &&\
+        dpkg gpg &&\
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 # nodejs
 RUN echo "**** install nodejs ****" &&\

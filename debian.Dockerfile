@@ -14,7 +14,7 @@ ENV YARN_VERSION 1.22.4
 RUN echo "**** update linux ****" && \
     apt-get update && \
     apt-get install --no-install-recommends -y \
-        dpkg xz &&\
+        dpkg &&\
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 # nodejs
 RUN echo "**** install nodejs ****" &&\
@@ -29,13 +29,14 @@ RUN echo "**** install nodejs ****" &&\
       *) echo "unsupported architecture"; exit 1 ;; \
     esac &&\
     set -ex &&\
-    curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH.tar.xz" &&\
+    curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH.tar.gz" &&\
     #curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" &&\
     #gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc &&\
     #grep " node-v$NODE_VERSION-linux-$ARCH.tar.xz\$" SHASUMS256.txt | sha256sum -c - &&\
-    tar -xJf "node-v$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner &&\
+    #tar -xJf "node-v$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner &&\
+    tar -xzf "node-v$NODE_VERSION-linux-$ARCH.tar.gz" -C /usr/local --strip-components=1 --no-same-owner &&\
     #rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt &&\
-    rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz"  &&\
+    rm "node-v$NODE_VERSION-linux-$ARCH.tar.gz"  &&\
     ln -s /usr/local/bin/node /usr/local/bin/nodejs &&\
     # smoke tests
     node --version &&\

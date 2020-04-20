@@ -3,7 +3,6 @@
 # 
 # https://github.com/suisrc/docker-code-server/releases
 # 
-# 
 # https://hub.docker.com/_/node
 # https://hub.docker.com/r/suisrc/vscode
 # FROM node:12-stretch
@@ -28,7 +27,7 @@ RUN echo "**** install nodejs ****" &&\
       armhf) ARCH='armv7l';; \
       i386) ARCH='x86';; \
       *) echo "unsupported architecture"; exit 1 ;; \
-    esac \
+    esac &&\
     set -ex &&\
     curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH.tar.xz" &&\
     curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" &&\
@@ -43,7 +42,7 @@ RUN echo "**** install nodejs ****" &&\
 
 # yarn
 RUN echo "**** install yarn ****" &&\
-    set -ex \
+    set -ex &&\
     curl -fsSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" &&\
     curl -fsSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc" &&\
     gpg --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz &&\
